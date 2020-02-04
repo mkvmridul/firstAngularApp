@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <style>
+                        body{
+                                background-image: url(bg.jpg);
+                                background-size: 100vw 100vh;
+                                background-repeat: no-repeat;
+                                color: #fff;
+                                width: 100vw;
+                                height: 100vh;
+                                overflow: hidden;
+                        }
+
+                        .app{
+                                width: 50%;
+                                margin-left: 25%;
+                                margin-top: 20vh;    
+                        }
+                </style>
+                <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        </head>
+        <body>
+                <div ng-app="todoApp" ng-controller="todoAppController" class="app">
+                        <h2>{{errorText}}</h2>
+                        <br>
+                        <ul>
+                                <li ng-repeat="list in lists">{{list}} <span ng-click="removeItem($index)">&#10005;</span></li>
+                        </ul>
+                        <input type="text" ng-model="todoInput" />
+                        <button ng-click="addItem()">Add</button>
+                </div>
+        </body>
+        <script>
+                var todoApp = angular.module("todoApp",[]);
+                todoApp.controller("todoAppController", ($scope) => {
+                        $scope.lists = ['a','b'];
+                        $scope.addItem = () => {
+                                if($scope.lists.includes($scope.todoInput)){
+                                        $scope.errorText = "can not add same item";
+                                }else if($scope.todoInput == null || $scope.todoInput == undefined){
+                                        $scope.errorText = "Item can not be empty";
+                                } else $scope.lists.push($scope.todoInput);
+                        }
+                        $scope.removeItem = (index) => {
+                                $scope.lists.splice(index,1);
+                        }
+                });
+        </script>
+</html>
